@@ -1,0 +1,25 @@
+
+
+.form-check {
+    margin: 30px 50px 50px 50px;
+
+}
+
+.tag-request{
+    font-size: 30px;
+    font-weight: 500;
+    padding: 0;
+    line-height: 1px;
+    margin: 150px 100px 50px 50px;
+    letter-spacing: 2px;
+ 
+    color: rgba(255, 255, 255, 0.6);
+ 
+}
+
+.tag-submit{
+
+    margin: 50px 100px 50px 50px;
+    
+}
+

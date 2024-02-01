@@ -1,0 +1,53 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block head_css %}
+<link href= "{% static 'css/loading_animation.css' %}" rel="stylesheet">
+<script>
+    $(document).ready(function() {
+        let user_id = '{{user_id}}'; // user_id from first user page
+        console.log("loading ...");
+        $.ajax({
+        type: 'POST',
+        url: '/run_recommendations/',
+        data: {
+        'user_id' : user_id
+        },
+        success: function(response) {
+        console.log('AJAX request was successful!');
+        console.log(response);
+        window.location.href = '/'+user_id;
+        },
+        error: function(xhr, status, error) {
+        console.log('AJAX request failed!');
+        console.log(error);
+        }
+    });
+
+    
+        
+    });
+</script>
+{% endblock %} 
+
+{% block content %}    
+<div class="center">
+    <div class="processing">
+    <h2>Get ready to laugh |</h2>
+    </div>
+
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+
+    
+</div>
+
+
+{% endblock %} 

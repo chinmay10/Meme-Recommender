@@ -1,0 +1,149 @@
+
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block head_css  %}
+<script>
+  function sendButtonName(buttonName,user_id) {
+  $.ajax({
+      type: 'POST',
+      url: 'like_image/',
+      data: {
+          'button_name': buttonName,
+          'user_id': user_id
+      },
+      success: function(data) {
+          console.log('Button name sent to backend');
+          $(`[name="${buttonName}"]`).addClass('liked');
+      },
+      error: function(xhr, status, error) {
+          console.log('Error sending button name to backend');
+      }
+  });
+}
+$(document).ready(function() {
+  let user = '{{user_id}}';
+  $.ajax({
+    type: 'POST',
+    url: '/run_recommendations/',
+    data: {
+      'user_id' : user
+    },
+    success: function(response) {
+      console.log('AJAX request was successful!');
+      console.log(response);
+    },
+    error: function(xhr, status, error) {
+      console.log('AJAX request failed!');
+      console.log(error);
+    }
+  });
+
+  $('.like').click(function() {
+    console.log('clicked');
+    $(this).attr('src', "{% static 'assets/liked_icon.PNG' %}");
+  });
+
+});
+</script>
+
+{% endblock %}
+
+ {% block nav_links  %}
+ {% endblock %}
+
+
+
+{% block content %}
+
+
+<main id="main" data-aos="fade" data-aos-delay="1500">
+
+    <!-- ======= Gallery Section ======= -->
+    <section id="gallery" class="gallery">
+      <div class="container-fluid">
+        
+        <div class="row justify-content-center">
+          <div class='col-md-auto'>
+          {% for image_url in image_urls %}
+          <div  style="max-width: 550px;" class="justify-content-center">
+            <div class="gallery-item h-100 justify-content-center">
+            <a class="justify-content-center">
+              <div class="position-relative h-100">
+          
+          {% if image_url|length > 1 %}
+          
+                <div class="slides-1 portfolio-details-slider swiper">
+                  <div class="swiper-wrapper align-items-center">
+                    {% for image in image_url %}
+                    <div class="swiper-slide">
+                      <img src="/media/{{image}}" alt="Responsive image" style="max-width: 550px; max-height: 550px;">
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <div class="swiper-pagination"></div>
+                </div>
+                
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                
+              </div>
+              
+              <div class="post-content">
+                <div class="reaction-wrapper">
+                  <a class="icon-container" role="button" aria-disabled="true" name = '{{image_url.0}}' onclick= "sendButtonName(name,'{{user_id}}')">
+                    <img src= "{% static 'assets/like.PNG' %}" class="like" alt=""> </a>
+                  <a class="icon-container" role="button" aria-disabled="true" >
+                    <img src= "{% static 'assets/share.PNG' %}" class="icon" alt=""> </a>
+                  <a class="icon-container" role="button" aria-disabled="true" >
+                    <img src= "{% static 'assets/fav.PNG' %}" class="icon" alt=""> </a>
+                </div>
+
+            </div>
+            </a>
+          
+            {% else %}
+            <a href="/media/{{ image_url.0 }}" title="Gallery 1" class="glightbox justify-content-center">
+              <img src="/media/{{ image_url.0 }}" class="img-fluid justify-content-center" alt="Responsive image" style="max-width: 550px; max-height: 550px;">
+            </a>
+       
+              <div class="post-content">
+                <div class="reaction-wrapper">
+                  <a class="icon-container" role="button" aria-disabled="true" name = '{{image_url.0}}' onclick= "sendButtonName(name,'{{user_id}}')">
+                    <img src= "{% static 'assets/like.PNG' %}" class="like" alt=""> </a>
+                  <a class="icon-container" role="button" aria-disabled="true" >
+                    <img src= "{% static 'assets/share.PNG' %}" class="icon" alt=""> </a>
+                  <a class="icon-container" role="button" aria-disabled="true" >
+                    <img src= "{% static 'assets/fav.PNG' %}" class="icon" alt=""> </a>
+                </div>
+
+            </div> 
+            {% endif %} 
+          
+            </div>
+          </div><!-- End Gallery Item -->
+
+
+
+
+
+          {% endfor %}
+        
+        </div>
+       
+        </div>
+        <div class="down-arrow">
+          <div class="reaction-wrapper">
+            <a class="icon-container" role="button" aria-disabled="true" onclick="location.href=''">
+              <img src= "{% static 'assets/down-arrow.PNG' %}" class="icon" alt=""> </a>
+          </div>
+        </div>
+        
+        
+      </div>
+    </section><!-- End Gallery Section -->
+
+  </main><!-- End #main -->
+
+
+{% endblock %}

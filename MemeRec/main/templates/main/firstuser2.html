@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+
+{% block head_css %}
+<link href= "{% static 'css/firstuser.css' %}" rel="stylesheet">
+<script>
+    $(document).ready(function() {
+        $("#submitBtn").click(function(){
+            console.log("submit clicked")
+
+        });
+        
+    });
+</script>
+{% endblock %} 
+
+{% block content %}      
+
+{% load crispy_forms_tags %}
+
+ {% comment %} <div>
+    <input type="checkbox" class="btn-check" id="btncheck1" value="Checkbox 1" autocomplete="off">
+    <label class="btn btn-outline-primary" for="btncheck1">Checkbox 1</label>
+    
+    <input type="checkbox" class="btn-check" id="btncheck2" value="Checkbox 2" autocomplete="off">
+    <label class="btn btn-outline-primary" for="btncheck2">Checkbox 2</label>
+    
+    <input type="checkbox" class="btn-check" id="btncheck3" value="Checkbox 3" autocomplete="off">
+    <label class="btn btn-outline-primary" for="btncheck3">Checkbox 3</label>
+</div>
+<button id="submitBtn">Submit</button>  {% endcomment %}
+
+{% comment %} <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form> {% endcomment %}
+
+<div class="tag-request"> Please select your interest areas:</div>
+{% crispy form helper %}
+{% comment %} <div class="tag-submit">
+<button class="btn btn-primary" type="submit">Submit</button>
+</div>  {% endcomment %}
+
+{% endblock %}
